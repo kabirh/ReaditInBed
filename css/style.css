@@ -1,0 +1,139 @@
+body {
+    margin: 0 auto;
+    background: #CEE3F8;
+    background-attachment: fixed;
+    background-image: url('/img/blu_stripes.png');
+    color: black;
+    font-family: verdana;
+    -webkit-font-smoothing:antialiased;
+    -moz-font-smoothing:antialiased;
+    -o-font-smoothing:antialiased;
+    font-smooth:auto;
+}
+
+container {}
+
+#feed {}
+
+.post {
+    background: white;
+    border: 2px dashed #D8D8D8;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    margin-bottom: 14px;
+    margin-left: 10px;
+    margin-right: 8px;
+    /* box-shadow: 0px 0px 4px 0px black;
+    -webkit-box-shadow: 0px 0px 4px 0px black; */
+    -webkit-box-shadow: 0 0 0 3px white, 0px 0px 4px 4px rgba(111,111,111, 1);
+    box-shadow: 0 0 0 3px white, 0px 0px 4px 4px rgba(10,10,0,.5);
+}
+
+.headline {
+    font-size: 14px;
+    padding-left: 3px;
+    padding-right: 2px;
+}
+
+.headline p {
+    margin-top: 5px;
+    margin-bottom: 7px;
+}
+
+.score {
+    color: gray;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.content {
+    overflow: visible;
+    margin-bottom: 3px;
+}
+
+.content.youtube {
+    margin-left: -8px;
+}
+
+.content.youtube iframe {
+        box-shadow: 0px 0px 4px black;
+}
+
+.content.selfpost {
+    overflow: hidden;
+    font-size: 12px;
+    background-color: #F0F0F0;
+    word-wrap: break-word;
+    border-top: 1px solid #369;
+    border-bottom: 1px solid #369;
+    padding: 3px;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+img.lazy {
+    box-shadow: 0px 0px 4px black;
+    width: 320px;
+    margin-left: -8px;
+}
+
+.domain {
+    font-size: 11px;
+    color: #666666;
+}
+
+.comment {
+    font-size: 12px;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding-left: 3px;
+    padding-right: 2px;
+}
+
+.comment p {
+    margin-top: 2px;
+    margin-bottom: 3px;
+}
+
+.author {
+    font-size: 8px;
+    color: #369;
+    font-weight: bold;
+}
+
+.c_score {
+    font-size: 9px;
+    color: gray;
+}
+
+.viewthread {
+    text-align: center;
+    /* background: #D8D8D8;
+    -webkit-border-bottom-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; */
+    color: black;
+    /* border: 2px dashed #D8D8D8; */
+    padding-top: 3px;
+}
+
+.gallery li {
+    list-style-type: none;
+    float: left;
+    margin-left: 5px;
+}
+
+
+.loadmore {
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 15px;
+}
+
+.clear {
+    clear: both;
+}
