@@ -127,7 +127,7 @@ var getFeed = function(feedurl) {
 var getHeadline = function(item) {
     var linkurl = item.data.url;
     linkurl = "'"+linkurl+"'";
-    $(".headline#"+item.data.id+"").append('<p><span class="score">'+item.data.score+'</span> <a href="javascript:void(0)" onclick="viewLink(' + linkurl + ')">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
+    $(".headline#"+item.data.id+"").append('<p><span class="score">'+item.data.score+'</span> <a href="' + linkurl + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
 }
 
 var getImgur = function(item) {
@@ -140,9 +140,9 @@ var getImgur = function(item) {
     } else {
         if (postUrl.charAt(postUrl.length-4) != ".") {postUrl = postUrl+".jpg";}
         //console.log(postUrl);
-        postUrl = "'"+postUrl+"'";
+        // postUrl = "'"+postUrl+"'";
         //console.log(postUrl);
-        $(".content#"+item.data.id+"").append('<img class="lazy" src="img/grey.gif" data-original='+postUrl+' onclick="viewLink(' + postUrl + ')" width="100%">');
+        $(".content#"+item.data.id+"").append('<a href="' + postUrl + '"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
     }
 }
 
@@ -168,18 +168,3 @@ var getAlbum = function(album, postID) {
     // var myPhotoSwipe = $(".gallery a").photoSwipe({ enableMouseWheel: false , enableKeyboard: false });        
 
 }
-
-
-/*
-var viewLink = function(linkurl, linktitle) {
-    if (linkurl.search('reddit.com') == 1) {linkurl = linkurl+".compact";}
-
-    forge.tabs.openWithOptions({
-        url: decodeURIComponent(linkurl),
-        icon: 'img/close.png',
-        title: linktitle,
-        tint: [214, 233, 248, 255],
-        buttonText: "Close"
-      });
-};
-*/
