@@ -55,9 +55,7 @@ container {}
     margin-left: -8px;
 }
 
-.content.youtube iframe {
-        box-shadow: 0px 0px 4px black;
-}
+.content.youtube iframe { box-shadow: 0px 0px 4px black; }
 
 .content.selfpost {
     overflow: hidden;
@@ -111,13 +109,7 @@ img.lazy {
 
 .viewthread {
     text-align: center;
-    /* background: #D8D8D8;
-    -webkit-border-bottom-right-radius: 8px;
-    -webkit-border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px; */
     color: black;
-    /* border: 2px dashed #D8D8D8; */
     padding-top: 3px;
 }
 
@@ -134,6 +126,10 @@ img.lazy {
     font-size: 15px;
 }
 
-.clear {
-    clear: both;
-}
+.clear { clear: both; }
+
+/* Styles for jQuery Youtube Lite embed plugin */
+
+div.lite { position: relative; left: 0; top: 0}
+
+img.lite:hover {background:url(http://lh5.googleusercontent.com/-oBFjswrosz4/TuHqainRc3I/AAAAAAAAAbE/t3rMQuSJdLA/s800/youtube-play-button-hover.png)}
