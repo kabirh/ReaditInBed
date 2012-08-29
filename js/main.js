@@ -126,8 +126,8 @@ var getFeed = function(feedurl) {
 
 var getHeadline = function(item) {
     var linkurl = item.data.url;
-    linkurl = "'"+linkurl+"'";
-    $(".headline#"+item.data.id+"").append('<p><span class="score">'+item.data.score+'</span> <a href="' + linkurl + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
+    // linkurl = "'"+linkurl+"'";
+    $(".headline#"+item.data.id+"").append('<p><span class="score">'+item.data.score+'</span> <a href="' + item.data.url + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
 }
 
 var getImgur = function(item) {
