@@ -15,9 +15,10 @@ var refresh = function(){
 };
 
 var getFeed = function(feedurl) {
-    // console.log('getFeed running on '+feedurl);
+    //console.log('getFeed running on '+feedurl);
     $.getJSON(feedurl, function(data) {
-        // console.log(data);
+        //console.log(data);
+
         if (!data) {alert('Sorry, I ran into an error getting this data.')};
         
         $.each(data.data.children, function(i,item){
@@ -27,32 +28,34 @@ var getFeed = function(feedurl) {
             else {
 
                 $("#feed").append('<div class="post" id="'+item.data.id+'">');
-                $("#"+item.data.id+"").append('<div class="headline" id="'+item.data.id+'">');
-                $("#"+item.data.id+"").append('<div class="content" id="'+item.data.id+'">');
-                $("#"+item.data.id+"").append('<div class="comment" id="'+item.data.id+'">');
-                $("#"+item.data.id+"").append('<div class="viewthread" id="'+item.data.id+'">');
-                $(".comment#"+item.data.id+"").append('<p>Loading top comment..</p>');    
+                $("#"+item.data.id+"").append('<div class="headline">');
+                $("#"+item.data.id+"").append('<div class="content">');
+                $("#"+item.data.id+"").append('<div class="comment"><p>Loading top comment..</p>');
+                $("#"+item.data.id+"").append('<div class="viewthread">');
+                //$("#"+item.data.id+"").append('<p>Loading top comment..</p>');
   
                 getHeadline(item);
                 
                 var domain = item.data.domain;
                 if (domain === "imgur.com" || domain === "i.imgur.com") { 
-                    $(".content#"+item.data.id+"").addClass("image");
+                    $("#"+item.data.id+" .content").addClass("image");
                     getImgur(item);  
                 } else if (item.data.url.split('.').pop() === "jpg" || item.data.url.split('.').pop() === "gif" || item.data.url.split('.').pop() === "png") {
                     // console.log("found a non-imgur image link"); 
-                    $(".content#"+item.data.id+"").append('<a href="' + item.data.url + '"><img class="lazy" src="img/grey.gif" data-original="' + item.data.url + '" width="100%"></a>');
+                    $("#"+item.data.id+" .content").append('<a href="' + item.data.url + '"><img class="lazy" src="img/grey.gif" data-original="' + item.data.url + '" width="100%"></a>');
                 } else if (domain.search('self.') == 0 && item.data.selftext_html != null) {
-                    $(".content#"+item.data.id+"").addClass("selfpost");
-                    $(".content#"+item.data.id+"").html(item.data.selftext_html);
-                    var htmlString = $(".content#"+item.data.id+"").text();
-                    $(".content#"+item.data.id+"").html(htmlString);
+                    $("#"+item.data.id+" .content").addClass("selfpost");
+                    $("#"+item.data.id+" .content").html(item.data.selftext_html);
+                    var htmlString = $("#"+item.data.id+" .content").text();
+                    $("#"+item.data.id+" .content").html(htmlString);
                 }
                   else if (domain === "youtube.com" || domain === "youtu.be") {
                     // console.log(domain+" is a youtube link");
-                    var youtubeID = item.data.media.oembed.url.split('=').pop();
-                    $(".content#"+item.data.id+"").addClass("youtube");
-                    $(".content#"+item.data.id+"").append('<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+youtubeID+'" frameborder="0"></iframe>');
+                    // if (item.data.media.oembed.url) {
+                        var youtubeID = item.data.url.split('=').pop();
+                        $("#"+item.data.id+" .content").addClass("youtube");
+                        $("#"+item.data.id+" .content").append('<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+youtubeID+'" frameborder="0"></iframe>');
+                    // }
                 }
             }        
         });
@@ -63,6 +66,31 @@ var getFeed = function(feedurl) {
         
         // var myPhotoSwipe = $(".gallery a").photoSwipe({ enableMouseWheel: false , enableKeyboard: false });
         
+        
+    
+        $.each(data.data.children, function(i,item){
+            var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".json?jsonp=?";
+            // console.log(commentUrl);
+        
+            $.getJSON(commentUrl, function(data) {
+                var comment = data[1].data.children[0].data.body_html;
+                var commentScore = data[1].data.children[0].data.ups - data[1].data.children[0].data.downs; 
+
+                $("#"+item.data.id+" .comment").html(comment)
+                var htmlStr = $("#"+item.data.id+" .comment").text();
+                $("#"+item.data.id+" .comment").html(htmlStr);
+                $("#"+item.data.id+" .comment").prepend('<span class="c_score">'+commentScore+' points</span> <span class="author">'+data[1].data.children[0].data.author+'</span>');
+
+                var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
+                commentUrl = "'"+commentUrl+"'";
+                $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread">View Thread</a>');
+                $("#"+item.data.id+" .viewthread").append('<div class="clear">');
+
+            });
+        });
+
+        $("img.lazy").lazyload({effect : "fadeIn"});
+
         $(".content.selfpost, .comment").dotdotdot({
             /*  The HTML to add as ellipsis. */
             ellipsis        : '[...]',
@@ -96,28 +124,6 @@ var getFeed = function(feedurl) {
                 noEllipsis      : []
             }
         });
-    
-        $.each(data.data.children, function(i,item){
-            var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".json?jsonp=?";
-            // console.log(commentUrl);
-        
-            $.getJSON(commentUrl, function(data) {
-                var comment = data[1].data.children[0].data.body_html;
-                var commentScore = data[1].data.children[0].data.ups - data[1].data.children[0].data.downs; 
-
-                $(".comment#"+item.data.id+"").html(comment)
-                var htmlStr = $(".comment#"+item.data.id+"").text();
-                $(".comment#"+item.data.id+"").html(htmlStr);
-                $(".comment#"+item.data.id+"").prepend('<span class="c_score">'+commentScore+' points</span> <span class="author">'+data[1].data.children[0].data.author+'</span>');
-
-                var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
-                commentUrl = "'"+commentUrl+"'";
-                $(".viewthread#"+item.data.id+"").html('<button type="submit" onclick="viewLink('+commentUrl+')" class="viewthread">View Thread</button>');
-
-            });
-        });
-
-        $("img.lazy").lazyload({effect : "fadeIn"});
                         
         nextUrl = "http://www.reddit.com/.json?jsonp=?&count=25&after="+data.data.after+"";
         // console.log('next url is '+nextUrl);
@@ -125,9 +131,11 @@ var getFeed = function(feedurl) {
 };
 
 var getHeadline = function(item) {
+    //console.log("wtf is happening here."+item.data.id)
+
     var linkurl = item.data.url;
     // linkurl = "'"+linkurl+"'";
-    $(".headline#"+item.data.id+"").append('<p><span class="score">'+item.data.score+'</span> <a href="' + item.data.url + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
+    $("#"+item.data.id+" .headline").append('<p><span class="score">'+item.data.score+'</span> <a href="' + item.data.url + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
 }
 
 var getImgur = function(item) {
@@ -135,14 +143,14 @@ var getImgur = function(item) {
     
     if (postUrl.search('/a/') != -1) {
         var postID = item.data.id;
-        $(".content#"+item.data.id+"").append('<ul class="gallery">');
+        $("#"+item.data.id+" .content").append('<ul class="gallery">');
         getAlbum(postUrl, postID);
     } else {
         if (postUrl.charAt(postUrl.length-4) != ".") {postUrl = postUrl+".jpg";}
         //console.log(postUrl);
         // postUrl = "'"+postUrl+"'";
         //console.log(postUrl);
-        $(".content#"+item.data.id+"").append('<a href="' + postUrl + '"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
+        $("#"+item.data.id+" .content").append('<a href="' + postUrl + '"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
     }
 }
 
@@ -161,7 +169,7 @@ var getAlbum = function(album, postID) {
            if ( i > 4) {return false};
         });
     
-        $(".content#"+postID+"").append('<div class="clear">');
+        $("#"+postID+" .content").append('<div class="clear">');
         
     });
 
