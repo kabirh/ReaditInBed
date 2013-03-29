@@ -11,17 +11,23 @@ body {
 }
 
 #header {
+   margin: 0 auto;
+/*
 	margin-left: 0px; 
 	font-size: 62px;
 	text-align: center;
 	margin-top: -90px;
+*/
 }
 
 #feed {
+   margin: 0 auto;
+/*
 	text-align: left;
 	margin-top: 460px;
 	margin-left: 150px;
 	font-size: 50px;
+*/
 }
 
 h1 {
@@ -30,7 +36,7 @@ h1 {
 }
 
 p {
-	padding-right: 50px;
+	/* padding-right: 50px; */
 }
 
 button {

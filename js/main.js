@@ -52,11 +52,17 @@ var getFeed = function(feedurl) {
                   else if (domain === "youtube.com" || domain === "youtu.be") {
                     // console.log(domain+" is a youtube link");
                     // if (item.data.media.oembed.url) {
-                        var youtubeID = item.data.url.split('=').pop();
-                        $("#"+item.data.id+" .content").addClass("youtube");
-                        $("#"+item.data.id+" .content").append('<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+youtubeID+'" frameborder="0"></iframe>');
+                        //var youtubeID = item.data.url.split('=').pop();
+                        var youtubeID = item.data.url;                        
+                        $("#"+item.data.id+" .content").addClass("embed youtube");
+                        $("#"+item.data.id+" .content").append('<a href="'+youtubeID+'">'+item.data.title+'</a>');
+                        //$("#"+item.data.id+" .content").append('<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+youtubeID+'" frameborder="0"></iframe>');
                     // }
                 }
+                    else if (domain ==="qkme.me") {
+                        $("#"+item.data.id+" .content").addClass("embed qkme");
+                        $("#"+item.data.id+" .content").append('<a href="'+item.data.url+'">'+item.data.title+'</a>');
+                    }
             }        
         });
     
@@ -82,7 +88,7 @@ var getFeed = function(feedurl) {
                 $("#"+item.data.id+" .comment").prepend('<span class="c_score">'+commentScore+' points</span> <span class="author">'+data[1].data.children[0].data.author+'</span>');
 
                 var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
-                commentUrl = "'"+commentUrl+"'";
+                //commentUrl = "'"+commentUrl+"'";
                 $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread">View Thread</a>');
                 $("#"+item.data.id+" .viewthread").append('<div class="clear">');
 

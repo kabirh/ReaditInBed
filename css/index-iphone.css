@@ -4,6 +4,7 @@ html {
   background-size: cover;
   font-family: Average;
   text-shadow: 1px 1px 2px rgb(26,26,26);
+  width: 320px;
 }
 
 body {
@@ -11,10 +12,14 @@ body {
 }
 
 #header {
+  text-align: center;
+  font-size: 62px;
+  /*
   margin-left: 0px; 
   font-size: 62px;
   text-align: center;
   margin-top: -90px;
+  */
 }
 
 #feed {
