@@ -11,9 +11,22 @@ body {
     font-smooth:auto;
 }
 
+header {
+    font-family: Average;
+    font-size: 90px;
+    text-shadow: 1px 1px 3px rgba(102, 102, 102, 1);
+    /* color: #666666; */
+    opacity: .8;
+}
+
 container {}
 
 #feed {}
+
+#info {
+    margin-top: 0px;
+    text-align: center;
+}
 
 .post {
     background: white;

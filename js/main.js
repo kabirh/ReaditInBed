@@ -6,6 +6,9 @@ var launch = function() {
     
     getFeed(url);
 
+    loaded = 1;
+    console.log(loaded)
+
 };
 
 var refresh = function(){
@@ -35,6 +38,10 @@ var getFeed = function(feedurl) {
                 //$("#"+item.data.id+"").append('<p>Loading top comment..</p>');
   
                 getHeadline(item);
+
+                var nsfw = item.data.over_18;
+                console.log(nsfw);
+                if (nsfw === true) {$("#"+item.data.id+" .content").addClass("nsfw");}
                 
                 var domain = item.data.domain;
                 if (domain === "imgur.com" || domain === "i.imgur.com") { 
@@ -42,7 +49,7 @@ var getFeed = function(feedurl) {
                     getImgur(item);  
                 } else if (item.data.url.split('.').pop() === "jpg" || item.data.url.split('.').pop() === "gif" || item.data.url.split('.').pop() === "png") {
                     // console.log("found a non-imgur image link"); 
-                    $("#"+item.data.id+" .content").append('<a href="' + item.data.url + '"><img class="lazy" src="img/grey.gif" data-original="' + item.data.url + '" width="100%"></a>');
+                    $("#"+item.data.id+" .content").append('<a href="' + item.data.url + '" target="_blank"><img class="lazy" src="img/grey.gif" data-original="' + item.data.url + '" width="100%"></a>');
                 } else if (domain.search('self.') == 0 && item.data.selftext_html != null) {
                     $("#"+item.data.id+" .content").addClass("selfpost");
                     $("#"+item.data.id+" .content").html(item.data.selftext_html);
@@ -55,14 +62,14 @@ var getFeed = function(feedurl) {
                         //var youtubeID = item.data.url.split('=').pop();
                         var youtubeID = item.data.url;                        
                         $("#"+item.data.id+" .content").addClass("embed youtube");
-                        $("#"+item.data.id+" .content").append('<a href="'+youtubeID+'">'+item.data.title+'</a>');
+                        $("#"+item.data.id+" .content").append('<a href="'+youtubeID+'" target="_blank">'+item.data.title+'</a>');
                         //$("#"+item.data.id+" .content").append('<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+youtubeID+'" frameborder="0"></iframe>');
                     // }
                 }
-                    else if (domain ==="qkme.me") {
+                /*     else if (domain ==="qkme.me") {
                         $("#"+item.data.id+" .content").addClass("embed qkme");
                         $("#"+item.data.id+" .content").append('<a href="'+item.data.url+'">'+item.data.title+'</a>');
-                    }
+                    } */
             }        
         });
     
@@ -89,7 +96,7 @@ var getFeed = function(feedurl) {
 
                 var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
                 //commentUrl = "'"+commentUrl+"'";
-                $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread">View Thread</a>');
+                $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread" target="_blank">View Thread</a>');
                 $("#"+item.data.id+" .viewthread").append('<div class="clear">');
 
             });
@@ -141,7 +148,7 @@ var getHeadline = function(item) {
 
     var linkurl = item.data.url;
     // linkurl = "'"+linkurl+"'";
-    $("#"+item.data.id+" .headline").append('<p><span class="score">'+item.data.score+'</span> <a href="' + item.data.url + '">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
+    $("#"+item.data.id+" .headline").append('<p><span class="score">'+item.data.score+'</span> <a href="' + item.data.url + '" target="_blank">' + item.data.title + '</a> <span class="domain">('+item.data.domain+')</span></p>');
 }
 
 var getImgur = function(item) {
@@ -156,7 +163,7 @@ var getImgur = function(item) {
         //console.log(postUrl);
         // postUrl = "'"+postUrl+"'";
         //console.log(postUrl);
-        $("#"+item.data.id+" .content").append('<a href="' + postUrl + '"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
+        $("#"+item.data.id+" .content").append('<a href="' + postUrl + '" target="_blank"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
     }
 }
 
@@ -171,7 +178,7 @@ var getAlbum = function(album, postID) {
         
         $.each(data.album.images, function(i, item) {
            // console.log(item.links.small_square);
-           $("div#"+postID+" .gallery").append('<li><a href="'+item.links.original+'"><img src="'+item.links.small_square+'" alt="Image '+i+'"></a></li>');
+           $("div#"+postID+" .gallery").append('<li><a href="'+item.links.original+'" target="_blank"><img src="'+item.links.small_square+'" alt="Image '+i+'"></a></li>');
            if ( i > 4) {return false};
         });
     
