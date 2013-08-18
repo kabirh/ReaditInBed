@@ -11,6 +11,10 @@ body {
     margin-right: 6px;
 }
 
+img#header {
+    width: 320px;
+}
+
 img.lazy {
     box-shadow: 0px 0px 4px black;
     width: 324px;

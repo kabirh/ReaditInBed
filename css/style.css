@@ -62,6 +62,7 @@ container {}
 .content {
     overflow: visible;
     margin-bottom: 3px;
+    text-align: center;
 }
 
 .content.embed {
@@ -83,6 +84,11 @@ container {}
 a {
 	color: blue;
 	text-decoration: none;
+}
+
+img.lazy.gif {
+    width: auto;
+    box-shadow: 0px 0px 4px black;
 }
 
 img.lazy {
@@ -122,8 +128,10 @@ img.lazy {
 
 .viewthread {
     text-align: left;
-    color: black;
+    padding-left: 5px;
+    color: blue;
     padding-top: 3px;
+
 }
 
 .gallery li {

@@ -2,7 +2,7 @@ var launch = function() {
 
     $('body').css('background-image', 'img/blu_stripes.png');
     
-    url = "http://www.reddit.com/.json?jsonp=?";
+    url = "http://www.reddit.com/r/wtf.json?jsonp=?";
     
     getFeed(url);
 
@@ -38,10 +38,6 @@ var getFeed = function(feedurl) {
                 //$("#"+item.data.id+"").append('<p>Loading top comment..</p>');
   
                 getHeadline(item);
-
-                var nsfw = item.data.over_18;
-                console.log(nsfw);
-                if (nsfw === true) {$("#"+item.data.id+" .content").addClass("nsfw");}
                 
                 var domain = item.data.domain;
                 if (domain === "imgur.com" || domain === "i.imgur.com") { 
@@ -70,39 +66,37 @@ var getFeed = function(feedurl) {
                         $("#"+item.data.id+" .content").addClass("embed qkme");
                         $("#"+item.data.id+" .content").append('<a href="'+item.data.url+'">'+item.data.title+'</a>');
                     } */
+
+                var nsfw = item.data.over_18;
+                console.log(nsfw);
+                if (nsfw === true) {$("#"+item.data.id+" .content").addClass("nsfw");}
             }        
         });
-    
-        // old image lazy loader location
-
-        // end image loader
         
-        // var myPhotoSwipe = $(".gallery a").photoSwipe({ enableMouseWheel: false , enableKeyboard: false });
-        
-        
-    
         $.each(data.data.children, function(i,item){
             var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".json?jsonp=?";
             // console.log(commentUrl);
         
             $.getJSON(commentUrl, function(data) {
-                var comment = data[1].data.children[0].data.body_html;
-                var commentScore = data[1].data.children[0].data.ups - data[1].data.children[0].data.downs; 
 
-                $("#"+item.data.id+" .comment").html(comment)
-                var htmlStr = $("#"+item.data.id+" .comment").text();
-                $("#"+item.data.id+" .comment").html(htmlStr);
-                $("#"+item.data.id+" .comment").prepend('<span class="c_score">'+commentScore+' points</span> <span class="author">'+data[1].data.children[0].data.author+'</span>');
+                    var comment = data[1].data.children[0].data.body_html;
+                    var commentScore = data[1].data.children[0].data.ups - data[1].data.children[0].data.downs; 
 
-                var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
-                //commentUrl = "'"+commentUrl+"'";
-                $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread" target="_blank">View Thread</a>');
-                $("#"+item.data.id+" .viewthread").append('<div class="clear">');
+                    $("#"+item.data.id+" .comment").html(comment)
+                    var htmlStr = $("#"+item.data.id+" .comment").text();
+                    $("#"+item.data.id+" .comment").html(htmlStr);
+                    $("#"+item.data.id+" .comment").prepend('<span class="c_score">'+commentScore+' points</span> <span class="author">'+data[1].data.children[0].data.author+'</span>');
+
+                    var commentUrl = "http://www.reddit.com/comments/"+item.data.id+".compact";
+                    //commentUrl = "'"+commentUrl+"'";
+                    $("#"+item.data.id+" .viewthread").html('<a href="' + commentUrl + '" class="viewthread" target="_blank">View Thread</a>');
+                    $("#"+item.data.id+" .viewthread").append('<div class="clear">');
 
             });
         });
 
         $("img.lazy").lazyload({effect : "fadeIn"});
+        $("img.lazy.gif").lazyload({effect : "fadeIn"});
 
         $(".content.selfpost, .comment").dotdotdot({
             /*  The HTML to add as ellipsis. */
@@ -163,7 +157,12 @@ var getImgur = function(item) {
         //console.log(postUrl);
         // postUrl = "'"+postUrl+"'";
         //console.log(postUrl);
-        $("#"+item.data.id+" .content").append('<a href="' + postUrl + '" target="_blank"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
+        if (postUrl.search('.gif') != -1) {
+            console.log("Found a gif:"+postUrl);
+            $("#"+item.data.id+" .content").append('<a href="' + postUrl + '" target="_blank"><img class="lazy gif" src="img/grey.gif" data-original="'+postUrl+'"></a>');
+        } else {
+            $("#"+item.data.id+" .content").append('<a href="' + postUrl + '" target="_blank"><img class="lazy" src="img/grey.gif" data-original="'+postUrl+'" width="100%"></a>');
+        }
     }
 }
 

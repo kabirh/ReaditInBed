@@ -17,3 +17,16 @@ body {
     -webkit-box-shadow: 0 0 0 3px white, 1px 0px 4px 4px rgba(10,10,0,.5);
     box-shadow: 0 0 0 3px white, 1px 0px 6px 4px rgba(10,10,0,.5);
 }
+
+p {
+    text-align: left;
+    margin: 15px;
+}
+
+ul {
+    text-align: left;
+    margin-top: -15px;
+}
+li {
+    padding-bottom: 5px;
+}
