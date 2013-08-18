@@ -6,7 +6,6 @@ var launch = function() {
     
     getFeed(url);
 
-    loaded = 1;
     console.log(loaded)
 
 };
@@ -18,6 +17,7 @@ var refresh = function(){
 };
 
 var getFeed = function(feedurl) {
+    mixpanel.track("getFeed");
     //console.log('getFeed running on '+feedurl);
     $.getJSON(feedurl, function(data) {
         //console.log(data);
