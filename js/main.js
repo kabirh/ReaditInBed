@@ -6,8 +6,6 @@ var launch = function() {
     
     getFeed(url);
 
-    console.log(loaded)
-
 };
 
 var refresh = function(){

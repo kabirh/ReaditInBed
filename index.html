@@ -25,7 +25,8 @@ g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview tra
 mixpanel.init("b8b029b5c74775454ad4d9932ceca8b8");</script><!-- end Mixpanel -->
 
   <!-- jQuery plugin that loads images when they come into view -->
-  <script src="js/jquery.lazyload.js?v=3" type="text/javascript" charset="utf-8"></script>
+  <!--<script src="js/jquery.lazyload.js?v=3" type="text/javascript" charset="utf-8"></script> -->
+  <script src="js/jquery.lazyload.min.js" type="text/javascript" charset="utf-8"></script>
   <!-- jQuery plugin for touch friendly albums, not used in this version
   <script type="text/javascript" src="js/klass.min.js"></script>
   <script type="text/javascript" src="js/code.photoswipe-3.0.5.js"></script> -->
@@ -55,12 +56,46 @@ mixpanel.init("b8b029b5c74775454ad4d9932ceca8b8");</script><!-- end Mixpanel -->
     $(document).ready(function() {
       //addToHome.reset();
       
-      localStorage.setItem('favoriteflavor', 'vanilla');
-      console.log(localStorage.getItem('favoriteflavor'));
-
-      mixpanel.track("Landed");
       launch();
+      mixpanel.track("First Timer");
       _gaq.push(['_trackEvent', 'Loading', 'firstload', 'Initial Load']);
+
+
+      /* I need to figure out how to make this work.
+      if (localStorage.getItem('timestamp') === null) {
+        launch();
+        localStorage.setItem('timestamp', Math.round(new Date().getTime() / 1000));
+        var f = $('#feed').html();
+        localStorage.setItem('state', f);        
+        console.log(f);
+        mixpanel.track("First Timer");
+        _gaq.push(['_trackEvent', 'Loading', 'firstload', 'Initial Load']);
+      } else {
+        var cur_time = localStorage.getItem('timestamp');
+        console.log("Current time is: "+cur_time);
+        console.log("Timestamp is: "+Math.round(new Date().getTime() / 1000));
+        console.log("Diff is " + (cur_time - Math.round(new Date().getTime() / 1000)));
+        console.log("State is " + (cur_time - Math.round(new Date().getTime() / 1000) < -60));
+        if (cur_time - Math.round(new Date().getTime() / 1000) < -60) {
+          console.log("Time diff is < -7200, refreshing");
+          localStorage.setItem('timestamp', Math.round(new Date().getTime() / 1000));
+          launch();
+          mixpanel.track("Landed");
+          _gaq.push(['_trackEvent', 'Loading', 'return', 'Return Load']);
+          var f = $('#feed').html();
+          console.log(f);
+          localStorage.setItem('state', f);
+        } else {
+          console.log("Time diff is short, trying to restore");
+          localStorage.setItem('timestamp', Math.round(new Date().getTime() / 1000));
+          mixpanel.track("Return");
+          console.log(localStorage.getItem('state'));
+          $('#feed').html(localStorage.getItem('state'));
+          _gaq.push(['_trackEvent', 'Loading', 'firstload', 'Initial Load']);
+        }
+      }
+      */
+
 
       // var myPhotoSwipe = $("#Gallery a").photoSwipe({ enableMouseWheel: false , enableKeyboard: false });
 
